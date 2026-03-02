@@ -5,7 +5,7 @@ import NeoCard from './NeoCard';
 
 const Services: React.FC = () => {
   const handleInquire = (serviceTitle: string) => {
-    const phoneNumber = "6282285598500";
+    const phoneNumber = "6285318386400";
     const message = encodeURIComponent(`Hello Putra, I'm interested in your ${serviceTitle} service. Can we discuss further?`);
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };

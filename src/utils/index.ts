@@ -1,4 +1,4 @@
-export const PHONE = '6282285598500'
+export const PHONE = '6285318386400'
 
 
 export function getGenericChatLink() {
