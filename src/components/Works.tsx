@@ -1,16 +1,19 @@
 import React from "react";
-import { PROJECTS } from "../constants";
 import ProjectCard from "./ProjectCard";
 import NeoButton from "./NeoButton";
+import { useProjects } from "../hooks/useSupabase";
+import { PROJECTS as DEFAULT_PROJECTS } from "../constants";
 
 interface WorksProps {
   onViewAll?: () => void;
 }
 
 const Works: React.FC<WorksProps> = ({ onViewAll }) => {
-  // Show only first 3 on home, ensuring variety
-  const featuredProjects = PROJECTS.filter((proj) => proj.featured);
-
+  const { projects, loading } = useProjects();
+  const actualProjects = projects.length > 0 ? projects : DEFAULT_PROJECTS;
+  const featuredProjects = actualProjects.filter((p) => p.featured);
+  // Fallback: If no projects are marked as featured, just show the first 3
+  const displayProjects = featuredProjects.length > 0 ? featuredProjects : actualProjects.slice(0, 3);
   return (
     <section id="work" className="space-y-12 sm:space-y-16">
       {/* Header Block with improved mobile scaling */}
@@ -18,7 +21,7 @@ const Works: React.FC<WorksProps> = ({ onViewAll }) => {
         {/* Background shadow box - hidden on very small screens to save space */}
         <div className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 w-full h-full bg-cyan-400 border-[3px] sm:border-4 border-black -z-10 hidden xs:block"></div>
 
-        <div className="bg-white dark:bg-[#2a2a2a] dark:text-white border-4 sm:border-8 border-black p-6 sm:p-8 md:p-12 relative overflow-hidden">
+        <div className="bg-white border-4 sm:border-8 border-black p-6 sm:p-8 md:p-12 relative overflow-hidden">
           {/* Subtle background text for radical look */}
           <div className="absolute top-0 right-0 p-4 opacity-[0.03] select-none pointer-events-none hidden md:block">
             <span className="text-[120px] font-black italic uppercase leading-none">
@@ -41,7 +44,7 @@ const Works: React.FC<WorksProps> = ({ onViewAll }) => {
 
             <div className="max-w-md lg:text-right">
               <p className="font-black text-lg sm:text-xl md:text-2xl leading-tight border-l-4 sm:border-l-8 lg:border-l-0 lg:border-r-8 border-black pl-4 sm:pl-6 lg:pl-0 lg:pr-6">
-                A curated selection of <span className="bg-yellow-300 px-1 dark:text-black">AI-powered and Modern Web Products</span> built for <span className="bg-lime-400 px-1 dark:text-black">real-World Impact</span>.
+                A curated selection of <span className="bg-yellow-300 px-1">AI-powered and Modern Web Products</span> built for <span className="bg-lime-400 px-1">real-World Impact</span>.
               </p>
             </div>
           </div>
@@ -50,13 +53,29 @@ const Works: React.FC<WorksProps> = ({ onViewAll }) => {
 
       {/* Grid Layout - 1 col mobile, 2 col tablet, 3 col desktop */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
-        {featuredProjects.map((project, idx) => (
-          <ProjectCard key={idx} project={project} index={idx} />
-        ))}
+        {loading && projects.length === 0 ? (
+          // Skeleton Loaders
+          [...Array(3)].map((_, idx) => (
+            <div key={idx} className="h-[400px] bg-white border-4 border-black p-6 flex flex-col gap-4 animate-pulse neo-shadow-sm">
+              <div className="w-full aspect-video bg-gray-200 border-4 border-black"></div>
+              <div className="flex gap-2"><div className="w-16 h-4 bg-gray-200 border-2 border-black"></div><div className="w-16 h-4 bg-gray-200 border-2 border-black"></div></div>
+              <div className="w-3/4 h-8 bg-gray-200 border-black mt-2"></div>
+              <div className="w-full h-12 bg-gray-200 border-black mt-auto"></div>
+            </div>
+          ))
+        ) : displayProjects.length > 0 ? (
+          displayProjects.map((project, idx) => (
+            <ProjectCard key={idx} project={project} index={idx} />
+          ))
+        ) : (
+          <div className="col-span-1 md:col-span-2 lg:col-span-3 text-center py-12 border-[3px] sm:border-4 border-black border-dashed opacity-50 font-black uppercase tracking-widest text-sm">
+            NO ARTIFACTS FOUND IN DATABASE
+          </div>
+        )}
       </div>
 
       {/* Call to Action with improved spacing and responsiveness */}
-      <div className="flex flex-col items-center gap-4 sm:gap-6 py-10 sm:py-16 border-y-[6px] sm:border-y-8 border-black dark:border-white/20 border-dashed reveal delay-500">
+      <div className="flex flex-col items-center gap-4 sm:gap-6 py-10 sm:py-16 border-y-[6px] sm:border-y-8 border-black border-dashed reveal delay-500">
         <div className="space-y-1 text-center">
           <h3 className="text-2xl sm:text-3xl md:text-4xl font-black uppercase italic">
             Hungry for more?

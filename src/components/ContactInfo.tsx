@@ -1,24 +1,16 @@
 
 import React, { useState } from 'react';
 import NeoCard from './NeoCard';
-import { FaGithub, FaLinkedin, FaTiktok } from 'react-icons/fa';
-import { SiFiverr } from 'react-icons/si';
+import { SITE_SETTINGS, SOCIAL_LINKS } from '../constants';
 
 const ContactInfo: React.FC = () => {
   const [copyStatus, setCopyStatus] = useState('COPY_EMAIL');
 
   const handleCopyEmail = () => {
-    navigator.clipboard.writeText('syahrizalardana@gmail.com');
+    navigator.clipboard.writeText(SITE_SETTINGS.email);
     setCopyStatus('COPIED!');
     setTimeout(() => setCopyStatus('COPY_EMAIL'), 2000);
   };
-
-  const socials = [
-    { name: 'GitHub', url: 'https://github.com/ptramichsthg', icon: FaGithub, color: 'hover:bg-purple-400' },
-    { name: 'LinkedIn', url: 'https://linkedin.com/in/putra-michael-sitohang-021707290', icon: FaLinkedin, color: 'hover:bg-blue-400' },
-    { name: 'TikTok', url: '#', icon: FaTiktok, color: 'hover:bg-pink-400' },
-    { name: 'Fiverr', url: '#', icon: SiFiverr, color: 'hover:bg-green-400' }
-  ];
 
   return (
     <section id="contact-info" className="px-2 sm:px-0">
@@ -64,8 +56,8 @@ const ContactInfo: React.FC = () => {
                   <span className="text-[9px] sm:text-[10px] font-black uppercase opacity-40 tracking-widest dark:text-gray-400">Global_Relay</span>
                 </div>
                 <div className="flex flex-col gap-4 sm:gap-5">
-                  <a href="mailto:syahrizalardana@gmail.com" className="text-xl xs:text-2xl sm:text-4xl font-black uppercase tracking-tighter hover:text-cyan-500 transition-colors break-all leading-tight border-b-4 sm:border-b-8 border-lime-300 w-fit dark:text-white">
-                    ptramichsthg@gmail.com
+                  <a href={`mailto:${SITE_SETTINGS.email}`} className="text-xl xs:text-2xl sm:text-4xl font-black uppercase tracking-tighter hover:text-cyan-500 transition-colors break-all leading-tight border-b-4 sm:border-b-8 border-lime-300 w-fit dark:text-white">
+                    {SITE_SETTINGS.email}
                   </a>
                   <button
                     onClick={handleCopyEmail}
@@ -98,20 +90,24 @@ const ContactInfo: React.FC = () => {
                 </div>
               </div>
               <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6">
-                {socials.map((social) => (
-                  <a
-                    key={social.name}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`flex items-center justify-center gap-2 sm:gap-3 border-[3px] sm:border-4 border-black p-3 sm:p-4 bg-white dark:bg-[#2a2a2a] dark:text-white dark:border-white/20 font-black uppercase text-[10px] sm:text-sm transition-all shadow-[4px_4px_0_0_rgba(0,0,0,1)] sm:shadow-[6px_6px_0_0_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1.5 hover:translate-y-1.5 ${social.color} group/btn`}
-                  >
-                    <span className="text-xl sm:text-2xl group-hover/btn:rotate-12 transition-transform">
-                      <social.icon />
-                    </span>
-                    <span className="truncate">{social.name}</span>
-                  </a>
-                ))}
+                {SOCIAL_LINKS.map((social, idx) => {
+                  const colors = ['hover:bg-purple-400', 'hover:bg-blue-400', 'hover:bg-pink-400', 'hover:bg-green-400', 'hover:bg-yellow-400', 'hover:bg-cyan-400'];
+                  const color = colors[idx % colors.length];
+                  return (
+                    <a
+                      key={social.name}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`flex items-center justify-center gap-2 sm:gap-3 border-[3px] sm:border-4 border-black p-3 sm:p-4 bg-white dark:bg-[#2a2a2a] dark:text-white dark:border-white/20 font-black uppercase text-[10px] sm:text-sm transition-all shadow-[4px_4px_0_0_rgba(0,0,0,1)] sm:shadow-[6px_6px_0_0_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1.5 hover:translate-y-1.5 ${color} group/btn`}
+                    >
+                      <span className="text-xl sm:text-2xl group-hover/btn:rotate-12 transition-transform">
+                        <social.icon />
+                      </span>
+                      <span className="truncate">{social.name}</span>
+                    </a>
+                  );
+                })}
               </div>
             </div>
           </div>

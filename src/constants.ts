@@ -1,5 +1,6 @@
 import { ImageHero, CertDicodingBackendJs, CertDicodingFrontendJs, CertDicodingDasarAI, CertDicodingPython, CertDicodingJava, CertDicodingC } from "./assets/images";
 import type { Project, SkillCategory, CertificationItem } from "./types";
+import type { DbProject, DbCertificate } from "./lib/supabase";
 import { FaRocket, FaBuilding, FaNodeJs, FaJava, FaGitAlt, FaGithub, FaFigma, FaNpm, FaRobot, FaLinkedin, FaWhatsapp, FaEnvelope } from "react-icons/fa";
 import { SiTypescript, SiTailwindcss, SiGoogle, SiNextdotjs, SiHtml5, SiCss3, SiJavascript, SiReact, SiExpress, SiMysql, SiMongodb, SiVercel, SiSupabase } from "react-icons/si";
 import { VscVscode } from "react-icons/vsc";
@@ -7,7 +8,7 @@ import { VscVscode } from "react-icons/vsc";
 export interface ExtendedProject extends Project {
   year: string;
   featured?: boolean;
-  category: string; // Dynamic based on Services
+  category: string;
 }
 
 export const SITE_SETTINGS = {
@@ -74,8 +75,107 @@ export const SERVICES = [
   },
 ];
 
-export const PROJECTS: ExtendedProject[] = [
-  // User will manually input data
+export const PROJECTS: DbProject[] = [
+  {
+    id: "portofolio-cms",
+    title: "Portofolio-CMS",
+    description: "Personal portfolio website with a Neo-Brutalist design, powered by a custom Supabase CMS.",
+    tags: ["TypeScript", "React", "Supabase"],
+    category: "Web Development",
+    year: "2026",
+    featured: true,
+    github_url: "https://github.com/ptramichsthg/Portofolio-CMS",
+    live_url: "#",
+    color: "bg-cyan-300",
+    image: "",
+    sort_order: 1
+  },
+  {
+    id: "kedai-kopi-pariban",
+    title: "Kedai Kopi Pariban",
+    description: "Website Kedai Kopi Pariban - Coffee Shop Website with React, TypeScript, and Tailwind CSS",
+    tags: ["React", "TypeScript", "Tailwind"],
+    category: "Landing Page",
+    year: "2026",
+    featured: true,
+    github_url: "https://github.com/ptramichsthg/kedai-kopi-pariban",
+    live_url: "https://kedai-kopi-pariban.vercel.app",
+    color: "bg-yellow-300",
+    image: "",
+    sort_order: 2
+  },
+  {
+    id: "anisa-butik",
+    title: "Anisa Butik",
+    description: "Modern e-commerce landing page and product showcase for a boutique business.",
+    tags: ["TypeScript", "Frontend"],
+    category: "E-Commerce",
+    year: "2026",
+    featured: true,
+    github_url: "https://github.com/ptramichsthg/anisa-butik",
+    live_url: "https://anisa-butik.vercel.app",
+    color: "bg-pink-300",
+    image: "",
+    sort_order: 3
+  },
+  {
+    id: "chocolate-sales",
+    title: "Chocolate Sales",
+    description: "Interactive sales dashboard and inventory management interface for chocolate products.",
+    tags: ["JavaScript", "Web App"],
+    category: "Web Application",
+    year: "2026",
+    featured: true,
+    github_url: "https://github.com/ptramichsthg/chocolate-sales",
+    live_url: "https://chocolate-sales.vercel.app",
+    color: "bg-orange-300",
+    image: "",
+    sort_order: 4
+  },
+  {
+    id: "muslimah-bride",
+    title: "Muslimah Bride",
+    description: "Elegant portfolio and booking system for a bridal makeup and dress service.",
+    tags: ["TypeScript", "React"],
+    category: "Landing Page",
+    year: "2026",
+    featured: true,
+    github_url: "https://github.com/ptramichsthg/Muslimah-Bride",
+    live_url: "https://muslimah-bride-gamma.vercel.app",
+    color: "bg-lime-300",
+    image: "",
+    sort_order: 5
+  }
+];
+
+export const CERTIFICATES: DbCertificate[] = [
+  {
+    id: "cert-1",
+    title: "Belajar Membuat Aplikasi Back-End untuk Pemula",
+    issuer: "Dicoding Indonesia",
+    year: "2024",
+    url: "https://www.dicoding.com/certificates/NVP790YQOZR0",
+    image: CertDicodingBackendJs,
+    sort_order: 1
+  },
+  {
+    id: "cert-2",
+    title: "Belajar Membuat Front-End Web untuk Pemula",
+    issuer: "Dicoding Indonesia",
+    year: "2024",
+    url: "https://www.dicoding.com/certificates/6VWZDOKDOPRG",
+    image: CertDicodingFrontendJs,
+    sort_order: 2
+  },
+  {
+    id: "cert-3",
+    title: "Belajar Dasar AI",
+    issuer: "Dicoding Indonesia",
+    year: "2024",
+    url: "https://www.dicoding.com/certificates/98XWVR8VKPM3",
+    image: CertDicodingDasarAI,
+    sort_order: 3
+  }
 ];
 
 export const SKILLS: SkillCategory[] = [

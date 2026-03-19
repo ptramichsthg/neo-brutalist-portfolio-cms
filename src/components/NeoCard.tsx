@@ -18,11 +18,7 @@ const NeoCard: React.FC<NeoCardProps> = ({
   noShadow = false,
   onClick,
 }) => {
-  // bg-white → dark bg (#2a2a2a) with white text
-  // vibrant colors → keep bright bg, force dark text (white text on bright = unreadable)
-  const darkClass = color === "bg-white"
-    ? "dark:bg-[#2a2a2a] dark:text-white dark:border-white/20"
-    : "dark:text-black";
+
 
   return (
     <div
@@ -30,7 +26,6 @@ const NeoCard: React.FC<NeoCardProps> = ({
       className={`
       border-4 border-black 
       ${color} 
-      ${darkClass}
       ${noShadow ? "" : "neo-shadow"} 
       p-6 
       ${className}

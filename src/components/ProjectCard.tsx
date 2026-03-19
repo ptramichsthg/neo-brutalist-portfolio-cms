@@ -1,18 +1,36 @@
-import React from "react";
-import type { ExtendedProject } from "../constants";
+import React, { useEffect, useState, useRef } from "react";
+import type { DbProject } from "../lib/supabase";
 import NeoCard from "./NeoCard";
 import NeoButton from "./NeoButton";
 
 interface ProjectCardProps {
-  project: ExtendedProject;
+  project: DbProject;
   index: number;
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+    );
+    if (cardRef.current) observer.observe(cardRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   const handleAction = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (project.link && project.link !== "#") {
-      window.open(project.link, "_blank");
+    const url = project.live_url;
+    if (url && url !== "#") {
+      window.open(url, "_blank");
     } else {
       alert("Case study coming soon!");
     }
@@ -25,7 +43,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
     : "group-hover:bg-black";
 
   return (
-    <div className={`reveal delay-${((index % 3) + 1) * 100} h-full`}>
+    <div 
+      ref={cardRef}
+      className={`reveal delay-${((index % 3) + 1) * 100} h-full ${isVisible ? 'active' : ''}`}
+    >
       <NeoCard
         color={cardBg}
         className="flex flex-col gap-4 sm:gap-6 group cursor-pointer neo-shadow-hover transition-all duration-300 h-full p-4 sm:p-6"
@@ -33,11 +54,17 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
       >
         {/* Dynamic Image Container */}
         <div className="relative border-[3px] sm:border-4 border-black overflow-hidden bg-black aspect-16/10 sm:aspect-video shrink-0">
-          <img
-            src={project.image}
-            alt={project.title}
-            className="w-full h-full object-cover grayscale contrast-125 transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110 opacity-70 group-hover:opacity-100"
-          />
+          {project.image ? (
+            <img
+              src={project.image}
+              alt={project.title}
+              className="w-full h-full object-cover grayscale contrast-125 transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110 opacity-70 group-hover:opacity-100"
+            />
+          ) : (
+            <div className="w-full h-full flex flex-col items-center justify-center bg-zinc-900 transition-all duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100">
+              <span className="text-5xl sm:text-7xl font-black italic opacity-20 uppercase tracking-tighter">IMG</span>
+            </div>
+          )}
           {/* Floating Year Badge */}
           <div className="absolute top-2 left-2 sm:top-4 sm:left-4 bg-white dark:bg-[#2a2a2a] dark:text-white border-2 sm:border-4 border-black px-1.5 sm:px-2 py-0.5 font-black text-[9px] sm:text-xs z-20 uppercase tracking-tighter shadow-[2px_2px_0_0_rgba(0,0,0,1)]">
             YR / {project.year}
@@ -61,7 +88,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
                 {tag}
               </span>
             ))}
-            {project.tags?.length > 3 && (
+            {project.tags && project.tags.length > 3 && (
               <span className="bg-white dark:bg-[#2a2a2a] dark:text-white text-black border-[1.5px] sm:border-2 border-black px-2 sm:px-3 py-0.5 sm:py-1 text-[8px] sm:text-[10px] font-black uppercase tracking-widest leading-none">
                 +{project.tags.length - 3}
               </span>

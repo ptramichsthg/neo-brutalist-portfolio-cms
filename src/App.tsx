@@ -8,11 +8,15 @@ import Testimonials from "./components/Testimonials";
 import ContactInfo from "./components/ContactInfo";
 import Footer from "./components/Footer";
 import AllProjects from "./components/AllProjects";
-import { useDarkMode } from "./hooks/useDarkMode";
+import AdminRoute from "./pages/admin";
+
+export type ViewState = "home" | "projects" | "admin";
 
 const App: React.FC = () => {
-  const [view, setView] = useState<"home" | "projects">("home");
-  const { theme, toggleTheme } = useDarkMode();
+  const [view, setView] = useState<ViewState>(() => {
+    if (window.location.pathname === '/admin') return "admin";
+    return "home";
+  });
 
   useEffect(() => {
     const observerOptions = {
@@ -63,9 +67,14 @@ const App: React.FC = () => {
     }
   };
 
+  // Check route
+  if (view === "admin") {
+    return <AdminRoute />;
+  }
+
   return (
-<div className="min-h-screen w-full overflow-x-hidden selection:bg-yellow-300 bg-[#f0f0f0] dark:bg-[#1a1a1a]" style={{ color: 'var(--text-primary)' }}>
-      <Navbar onHomeClick={handleNavigateHome} currentView={view} theme={theme} onToggleTheme={toggleTheme} />
+    <div className="min-h-screen w-full overflow-x-hidden selection:bg-yellow-300 bg-[#f0f0f0]" style={{ color: 'var(--text-primary)' }}>
+      <Navbar onHomeClick={handleNavigateHome} currentView={view as "home" | "projects"} />
       <div className="max-w-7xl mx-auto px-4 md:px-8 pt-24 md:pt-32">
         <main className="space-y-24">
           {view === "home" ? (

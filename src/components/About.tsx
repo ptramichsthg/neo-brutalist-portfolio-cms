@@ -1,10 +1,14 @@
 
 import React from 'react';
-import { SKILLS, CERTIFICATIONS } from '../constants';
+import { SKILLS, CERTIFICATES } from '../constants';
+import { useCertificates } from '../hooks/useSupabase';
 import NeoCard from './NeoCard';
 import { FaQuestion, FaGitAlt, FaBolt, FaFigma, FaRocket } from 'react-icons/fa';
 
 const About: React.FC = () => {
+  const { certificates, loading } = useCertificates();
+  const displayCertificates = certificates.length > 0 ? certificates : CERTIFICATES;
+
   return (
     <section id="about" className="space-y-8 sm:space-y-12 md:space-y-16 lg:space-y-24">
       {/* Header Section with Fluid Typography */}
@@ -163,8 +167,18 @@ const About: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
-          {CERTIFICATIONS.map((cert, idx) => (
-            <NeoCard key={idx} color="bg-white" className="flex flex-col justify-between gap-0 h-full hover:-translate-y-2 transition-transform overflow-hidden p-0!">
+          {loading && certificates.length === 0 ? (
+            Array.from({ length: 3 }).map((_, i) => (
+              <NeoCard key={i} color="bg-white" className="flex flex-col justify-between gap-0 h-[280px] p-0 animate-pulse">
+                <div className="h-36 bg-gray-200 border-b-4 border-black w-full"></div>
+                <div className="p-6 space-y-4">
+                  <div className="h-4 bg-gray-300 w-3/4"></div>
+                  <div className="h-3 bg-gray-300 w-1/2"></div>
+                </div>
+              </NeoCard>
+            ))
+          ) : displayCertificates.map((cert) => (
+            <NeoCard key={cert.id} color="bg-white" className="flex flex-col justify-between gap-0 h-full hover:-translate-y-2 transition-transform overflow-hidden p-0!">
               {/* Certificate Image Preview */}
               {cert.image ? (
                 <a href={cert.url} target="_blank" rel="noopener noreferrer" className="block relative group overflow-hidden border-b-4 border-black">

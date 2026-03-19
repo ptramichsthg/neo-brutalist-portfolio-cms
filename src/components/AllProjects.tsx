@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { PROJECTS, SERVICES } from "../constants";
+import { useProjects } from "../hooks/useSupabase";
 import NeoButton from "./NeoButton";
 import ProjectCard from "./ProjectCard";
+import { PROJECTS as DEFAULT_PROJECTS } from "../constants";
 
 interface AllProjectsProps {
   onBack: () => void;
@@ -9,12 +10,16 @@ interface AllProjectsProps {
 
 const AllProjects: React.FC<AllProjectsProps> = ({ onBack }) => {
   const [filter, setFilter] = useState<string>("All");
+  const { projects, loading } = useProjects();
 
-  // Extract categories directly from the SERVICES array
-  const serviceCategories = ["All", ...SERVICES.map((s) => s.title)];
+  const actualProjects = projects.length > 0 ? projects : DEFAULT_PROJECTS;
+
+  // Extract unique categories dynamically from all projects
+  const uniqueCategories = Array.from(new Set(actualProjects.map(p => p.category).filter(Boolean)));
+  const serviceCategories = ["All", ...uniqueCategories];
 
   const filteredProjects =
-    filter === "All" ? PROJECTS : PROJECTS.filter((p) => p.category === filter);
+    filter === "All" ? actualProjects : actualProjects.filter((p) => p.category === filter);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
@@ -194,7 +199,17 @@ const AllProjects: React.FC<AllProjectsProps> = ({ onBack }) => {
 
       {/* Dynamic Project Grid - Using unified ProjectCard */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 md:gap-12 pt-4">
-        {filteredProjects.length > 0 ? (
+        {loading && projects.length === 0 ? (
+          // Skeleton Loaders
+          [...Array(6)].map((_, idx) => (
+            <div key={idx} className="h-[400px] bg-white border-4 border-black p-6 flex flex-col gap-4 animate-pulse neo-shadow-sm">
+              <div className="w-full aspect-video bg-gray-200 border-4 border-black"></div>
+              <div className="flex gap-2"><div className="w-16 h-4 bg-gray-200 border-2 border-black"></div><div className="w-16 h-4 bg-gray-200 border-2 border-black"></div></div>
+              <div className="w-3/4 h-8 bg-gray-200 border-black mt-2"></div>
+              <div className="w-full h-12 bg-gray-200 border-black mt-auto"></div>
+            </div>
+          ))
+        ) : filteredProjects.length > 0 ? (
           filteredProjects.map((project, idx) => (
             <ProjectCard
               key={`${filter}-${project.title}-${idx}`}
