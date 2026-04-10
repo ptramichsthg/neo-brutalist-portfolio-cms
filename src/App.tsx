@@ -9,6 +9,7 @@ import ContactInfo from "./components/ContactInfo";
 import Footer from "./components/Footer";
 import AllProjects from "./components/AllProjects";
 import AdminRoute from "./pages/admin";
+import BackgroundDecor from "./components/BackgroundDecor";
 
 export type ViewState = "home" | "projects" | "admin";
 
@@ -73,7 +74,8 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen w-full overflow-x-hidden selection:bg-yellow-300 bg-[#f0f0f0]" style={{ color: 'var(--text-primary)' }}>
+    <div className="min-h-screen w-full overflow-x-hidden selection:bg-yellow-300 dark:selection:bg-pink-400 dark:selection:text-black bg-(--bg-primary) text-(--text-primary) transition-colors duration-300">
+      <BackgroundDecor />
       <Navbar onHomeClick={handleNavigateHome} currentView={view as "home" | "projects"} />
       <div className="max-w-7xl mx-auto px-4 md:px-8 pt-24 md:pt-32">
         <main className="space-y-24">

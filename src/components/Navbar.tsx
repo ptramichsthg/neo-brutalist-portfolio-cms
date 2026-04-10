@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import NeoButton from './NeoButton';
+import { useDarkMode } from '../hooks/useDarkMode';
 
 interface NavbarProps {
   onHomeClick?: (forceScrollTop?: boolean) => void;
@@ -10,6 +11,7 @@ const Navbar: React.FC<NavbarProps> = ({ onHomeClick, currentView = 'home' }) =>
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('');
+  const { theme, toggleTheme } = useDarkMode();
 
   const navLinks = React.useMemo(() => [
     { name: 'Home', id: 'work', color: 'bg-cyan-400' },
@@ -103,13 +105,13 @@ const Navbar: React.FC<NavbarProps> = ({ onHomeClick, currentView = 'home' }) =>
   };
 
   return (
-    <div className={`fixed top-0 left-0 right-0 z-100 px-2 sm:px-4 transition-all duration-500 flex justify-center ${isScrolled ? 'pt-1 sm:pt-2' : 'pt-4 sm:pt-6'
+    <div className={`fixed top-0 left-0 right-0 z-100 px-2 sm:px-4 transition-all duration-500 flex justify-center bg-(--bg-primary) ${isScrolled ? 'pt-1 sm:pt-2' : 'pt-4 sm:pt-6'
       }`}>
       <div className={`
-        w-full max-w-7xl border-[3px] sm:border-4 border-black transition-all duration-500 relative bg-white
+        w-full max-w-7xl border-[3px] sm:border-4 border-black dark:border-white transition-all duration-500 relative bg-white dark:bg-[#1a1a1a] dark:text-white
         ${isScrolled
-          ? 'shadow-[4px_4px_0_0_rgba(0,0,0,1)] py-1.5 sm:py-2'
-          : 'shadow-[8px_8px_0_0_rgba(0,0,0,1)] py-2 sm:py-4'
+          ? 'shadow-[4px_4px_0_0_rgba(0,0,0,1)] dark:shadow-[4px_4px_0_0_rgba(255,255,255,0.6)] py-1.5 sm:py-2'
+          : 'shadow-[8px_8px_0_0_rgba(0,0,0,1)] dark:shadow-[8px_8px_0_0_rgba(255,255,255,0.6)] py-2 sm:py-4'
         }
       `}>
 
@@ -123,9 +125,9 @@ const Navbar: React.FC<NavbarProps> = ({ onHomeClick, currentView = 'home' }) =>
             onDoubleClick={(e) => { e.preventDefault(); window.location.href = '/admin'; }}
             title="Klik 2x masuk Admin"
           >
-            <div className="absolute inset-0 bg-black translate-x-1 translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform"></div>
-            <div className="relative border-2 border-black px-2 py-1 flex items-center gap-2 sm:gap-3 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5 bg-white">
-              <h1 className="text-sm sm:text-base md:text-xl font-black tracking-tighter uppercase leading-none text-black">
+            <div className="absolute inset-0 bg-black dark:bg-white translate-x-1 translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform"></div>
+            <div className="relative border-2 border-black dark:border-white px-2 py-1 flex items-center gap-2 sm:gap-3 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5 bg-white dark:bg-black">
+              <h1 className="text-sm sm:text-base md:text-xl font-black tracking-tighter uppercase leading-none text-black dark:text-white">
                 Putra Michael Sitohang
               </h1>
             </div>
@@ -141,10 +143,10 @@ const Navbar: React.FC<NavbarProps> = ({ onHomeClick, currentView = 'home' }) =>
                     <button
                       onClick={() => scrollTo(link.id)}
                       className={`
-                        cursor-pointer relative z-10 font-black uppercase italic tracking-tighter transition-all px-2 xl:px-3 py-1.5 border-2 border-black text-[10px] xl:text-xs
+                        cursor-pointer relative z-10 font-black uppercase italic tracking-tighter transition-all px-2 xl:px-3 py-1.5 border-2 border-black dark:border-white text-[10px] xl:text-xs
                         ${isActive
-                          ? `${link.color} -translate-x-0.5 -translate-y-0.5 shadow-[2px_2px_0_0_rgba(0,0,0,1)]`
-                          : 'bg-white hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[2px_2px_0_0_rgba(0,0,0,1)] hover:bg-yellow-50'
+                          ? `${link.color} dark:text-black -translate-x-0.5 -translate-y-0.5 shadow-[2px_2px_0_0_rgba(0,0,0,1)]`
+                          : 'bg-white dark:bg-[#2a2a2a] dark:text-white hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[2px_2px_0_0_rgba(0,0,0,1)] hover:bg-yellow-50 dark:hover:bg-[#3a3a3a]'
                         }
                       `}
                     >
@@ -155,24 +157,39 @@ const Navbar: React.FC<NavbarProps> = ({ onHomeClick, currentView = 'home' }) =>
               })}
             </ul>
 
-            <div className="h-8 w-0.5 bg-black mx-1 opacity-20"></div>
+            <div className="h-8 w-0.5 bg-black dark:bg-white mx-1 opacity-20"></div>
 
             <NeoButton
               variant="secondary"
               onClick={() => scrollTo('contact-info')}
-              className="py-2! px-4! text-[10px] xl:text-xs group border-2!"
+              className="py-2! px-4! text-[10px] xl:text-xs group border-2! dark:border-white!"
             >
               <span>Uplink</span>
               <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div>
             </NeoButton>
+            <button
+              onClick={toggleTheme}
+              className="p-1.5 xl:p-2 border-2 border-black dark:border-white bg-white dark:bg-black text-black dark:text-white shadow-[2px_2px_0_0_rgba(0,0,0,1)] dark:shadow-[2px_2px_0_0_rgba(255,255,255,0.7)] hover:-translate-y-0.5 active:shadow-none active:translate-x-0.5 active:translate-y-0.5 transition-all text-sm"
+              aria-label="Toggle Theme"
+            >
+              {theme === 'dark' ? '☀️' : '🌙'}
+            </button>
           </nav>
 
           {/* Mobile Controls */}
           <div className="lg:hidden flex items-center gap-1.5 sm:gap-3">
-            <div className="hidden xs:flex flex-col items-end leading-none mr-1">
+            <div className="hidden xs:flex flex-col items-end leading-none mr-1 dark:text-gray-300">
               <span className="text-[7px] sm:text-[8px] font-black uppercase opacity-50 italic">System</span>
               <span className="text-[9px] sm:text-[10px] font-black uppercase text-lime-600">Active</span>
             </div>
+            
+            <button
+              onClick={toggleTheme}
+              className="p-1.5 sm:p-2.5 border-2 border-black dark:border-white bg-white dark:bg-black text-black dark:text-white shadow-[3px_3px_0_0_rgba(0,0,0,1)] dark:shadow-[3px_3px_0_0_rgba(255,255,255,0.7)] active:shadow-none active:translate-x-0.5 active:translate-y-0.5 transition-all focus:outline-none"
+              aria-label="Toggle Theme"
+            >
+              {theme === 'dark' ? '☀️' : '🌙'}
+            </button>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className={`
@@ -209,8 +226,8 @@ const Navbar: React.FC<NavbarProps> = ({ onHomeClick, currentView = 'home' }) =>
           >
             <div
               className={`
-                absolute top-0 right-0 h-full w-full xs:w-[85%] sm:w-[70%] max-w-md border-l-[6px] sm:border-l-8 border-black p-5 xs:p-6 sm:p-8 flex flex-col gap-6 xs:gap-8 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]
-                bg-[#f0f0f0]
+                absolute top-0 right-0 h-full w-full xs:w-[85%] sm:w-[70%] max-w-md border-l-[6px] sm:border-l-8 border-black dark:border-white p-5 xs:p-6 sm:p-8 flex flex-col gap-6 xs:gap-8 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]
+                bg-(--bg-primary) dark:text-white
                 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}
               `}
               onClick={(e) => e.stopPropagation()}

@@ -86,7 +86,7 @@ const ContactInfo: React.FC = () => {
               <div className="flex items-center justify-between">
                 <span className="text-[9px] sm:text-[11px] font-black uppercase opacity-50 tracking-[0.2em] sm:tracking-[0.4em]">Social_Matrix_Override</span>
                 <div className="flex gap-1">
-                  {[1, 2, 3, 4, 5].map(i => <div key={i} className="w-1.5 h-3 sm:h-4 bg-black/10"></div>)}
+                  {[1, 2, 3, 4, 5].map(i => <div key={i} className="w-1.5 h-3 sm:h-4 bg-black/10 dark:bg-white/10"></div>)}
                 </div>
               </div>
               <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6">
@@ -115,7 +115,7 @@ const ContactInfo: React.FC = () => {
           {/* Footer Diagnostic Panel */}
           <div className="bg-gray-50 dark:bg-[#1a1a1a] p-4 sm:p-5 border-t-[6px] sm:border-t-8 border-black flex items-center justify-between overflow-hidden">
             <div className="flex gap-1.5 sm:gap-2 shrink-0">
-              {[1, 2, 3, 4, 5, 6].map(i => <div key={i} className={`w-1.5 sm:w-2 h-4 sm:h-5 ${i % 3 === 0 ? 'bg-pink-400' : 'bg-black'}`}></div>)}
+              {[1, 2, 3, 4, 5, 6].map(i => <div key={i} className={`w-1.5 sm:w-2 h-4 sm:h-5 ${i % 3 === 0 ? 'bg-pink-400' : 'bg-black dark:bg-white/60'}`}></div>)}
             </div>
             <span className="text-[8px] sm:text-[11px] font-black opacity-30 uppercase tracking-[0.3em] sm:tracking-[0.6em] truncate ml-3 sm:ml-4">SYSTEM_UPLINK_READY_FOR_ENGAGEMENT</span>
           </div>

@@ -25,7 +25,7 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLoginSuccess }) => {
     setError('');
     setIsSubmitting(true);
 
-    const { error } = await signIn(email, password);
+    const { error } = await signIn(email.trim().toLowerCase(), password);
 
     if (error) {
       setError('Akses Ditolak. Email atau password salah.');
@@ -116,7 +116,7 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLoginSuccess }) => {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   placeholder="admin@email.com"
-                  className="relative w-full border-4 border-black px-4 py-3 font-black text-sm bg-white focus:outline-none focus:bg-yellow-50 transition-colors uppercase tracking-wide placeholder:normal-case placeholder:opacity-40 placeholder:font-bold"
+                  className="relative w-full border-4 border-black px-4 py-3 font-black text-sm bg-white focus:outline-none focus:bg-yellow-50 transition-colors tracking-wide placeholder:opacity-40 placeholder:font-bold"
                 />
               </div>
             </div>

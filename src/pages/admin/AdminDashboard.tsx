@@ -3,6 +3,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabase';
 import type { DbProject, DbService, DbTestimonial, DbCertificate } from '../../lib/supabase';
 import { useProjects, useServices, useTestimonials, useCertificates } from '../../hooks/useSupabase';
+import { PROJECTS } from '../../constants';
 
 type ActiveTab = 'projects' | 'services' | 'testimonials' | 'certificates';
 
@@ -96,8 +97,9 @@ const ImageUploader = ({
 
       const { data } = supabase.storage.from(bucket).getPublicUrl(filePath);
       onChange(data.publicUrl);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : String(err);
+      setError(errorMessage);
       console.error(err);
     } finally {
       setUploading(false);
@@ -182,16 +184,17 @@ const ProjectsPanel = () => {
     if (!window.confirm("Ini akan memasukkan 5 proyek default dari GitHub Anda ke dalam database CMS. Lanjutkan?")) return;
     setSaving(true);
     try {
-      const { PROJECTS } = await import('../../constants');
       // Omit 'id' so Supabase auto-generates UUIDs
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const projectsToInsert = PROJECTS.map(({ id, ...rest }) => rest);
       
       const { error } = await supabase.from('projects').insert(projectsToInsert);
       if (error) throw error;
       
       refetch();
-    } catch (err: any) {
-      alert("Gagal memuat default: " + err.message);
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : String(err);
+      alert("Gagal memuat default: " + errorMessage);
     } finally {
       setSaving(false);
     }

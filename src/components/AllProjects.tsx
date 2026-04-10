@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useProjects } from "../hooks/useSupabase";
 import NeoButton from "./NeoButton";
 import ProjectCard from "./ProjectCard";
-import { PROJECTS as DEFAULT_PROJECTS } from "../constants";
 
 interface AllProjectsProps {
   onBack: () => void;
@@ -12,7 +11,7 @@ const AllProjects: React.FC<AllProjectsProps> = ({ onBack }) => {
   const [filter, setFilter] = useState<string>("All");
   const { projects, loading } = useProjects();
 
-  const actualProjects = projects.length > 0 ? projects : DEFAULT_PROJECTS;
+  const actualProjects = projects;
 
   // Extract unique categories dynamically from all projects
   const uniqueCategories = Array.from(new Set(actualProjects.map(p => p.category).filter(Boolean)));
@@ -202,7 +201,7 @@ const AllProjects: React.FC<AllProjectsProps> = ({ onBack }) => {
         {loading && projects.length === 0 ? (
           // Skeleton Loaders
           [...Array(6)].map((_, idx) => (
-            <div key={idx} className="h-[400px] bg-white border-4 border-black p-6 flex flex-col gap-4 animate-pulse neo-shadow-sm">
+            <div key={idx} className="h-[400px] bg-white dark:bg-[#2a2a2a] border-4 border-black dark:border-white/30 p-6 flex flex-col gap-4 animate-pulse neo-shadow-sm">
               <div className="w-full aspect-video bg-gray-200 border-4 border-black"></div>
               <div className="flex gap-2"><div className="w-16 h-4 bg-gray-200 border-2 border-black"></div><div className="w-16 h-4 bg-gray-200 border-2 border-black"></div></div>
               <div className="w-3/4 h-8 bg-gray-200 border-black mt-2"></div>
@@ -284,7 +283,7 @@ const AllProjects: React.FC<AllProjectsProps> = ({ onBack }) => {
           </span>
           <div className="flex gap-1 mt-2">
             {[1, 2, 3, 4, 5].map((i) => (
-              <div key={i} className="w-4 h-1 bg-black"></div>
+              <div key={i} className="w-4 h-1 bg-black dark:bg-white"></div>
             ))}
           </div>
         </div>

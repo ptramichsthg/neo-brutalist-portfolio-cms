@@ -2,7 +2,6 @@ import React from "react";
 import ProjectCard from "./ProjectCard";
 import NeoButton from "./NeoButton";
 import { useProjects } from "../hooks/useSupabase";
-import { PROJECTS as DEFAULT_PROJECTS } from "../constants";
 
 interface WorksProps {
   onViewAll?: () => void;
@@ -10,7 +9,7 @@ interface WorksProps {
 
 const Works: React.FC<WorksProps> = ({ onViewAll }) => {
   const { projects, loading } = useProjects();
-  const actualProjects = projects.length > 0 ? projects : DEFAULT_PROJECTS;
+  const actualProjects = projects;
   const featuredProjects = actualProjects.filter((p) => p.featured);
   // Fallback: If no projects are marked as featured, just show the first 3
   const displayProjects = featuredProjects.length > 0 ? featuredProjects : actualProjects.slice(0, 3);
@@ -21,7 +20,7 @@ const Works: React.FC<WorksProps> = ({ onViewAll }) => {
         {/* Background shadow box - hidden on very small screens to save space */}
         <div className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 w-full h-full bg-cyan-400 border-[3px] sm:border-4 border-black -z-10 hidden xs:block"></div>
 
-        <div className="bg-white border-4 sm:border-8 border-black p-6 sm:p-8 md:p-12 relative overflow-hidden">
+        <div className="bg-white dark:bg-[#1a1a1a] border-4 sm:border-8 border-black dark:border-white/70 p-6 sm:p-8 md:p-12 relative overflow-hidden">
           {/* Subtle background text for radical look */}
           <div className="absolute top-0 right-0 p-4 opacity-[0.03] select-none pointer-events-none hidden md:block">
             <span className="text-[120px] font-black italic uppercase leading-none">
@@ -34,7 +33,7 @@ const Works: React.FC<WorksProps> = ({ onViewAll }) => {
               <span className="bg-pink-400 text-black font-black px-2 sm:px-3 py-1 uppercase text-[10px] sm:text-sm border-2 border-black neo-shadow-sm inline-block">
                 Archive Vol. 1
               </span>
-              <h2 className="text-4xl sm:text-6xl md:text-8xl font-black uppercase italic tracking-tighter leading-[0.85] sm:leading-[0.8]">
+              <h2 className="text-4xl sm:text-6xl md:text-8xl font-black uppercase italic tracking-tighter leading-[0.85] sm:leading-[0.8] dark:text-white">
                 Selected <br className="hidden sm:block" />{" "}
                 <span className="text-white drop-shadow-[2px_2px_0px_rgba(0,0,0,1)] md:drop-shadow-[4px_4px_0px_rgba(0,0,0,1)]">
                   Artifacts
@@ -56,7 +55,7 @@ const Works: React.FC<WorksProps> = ({ onViewAll }) => {
         {loading && projects.length === 0 ? (
           // Skeleton Loaders
           [...Array(3)].map((_, idx) => (
-            <div key={idx} className="h-[400px] bg-white border-4 border-black p-6 flex flex-col gap-4 animate-pulse neo-shadow-sm">
+            <div key={idx} className="h-[400px] bg-white dark:bg-[#2a2a2a] border-4 border-black dark:border-white/30 p-6 flex flex-col gap-4 animate-pulse neo-shadow-sm">
               <div className="w-full aspect-video bg-gray-200 border-4 border-black"></div>
               <div className="flex gap-2"><div className="w-16 h-4 bg-gray-200 border-2 border-black"></div><div className="w-16 h-4 bg-gray-200 border-2 border-black"></div></div>
               <div className="w-3/4 h-8 bg-gray-200 border-black mt-2"></div>

@@ -38,7 +38,7 @@ const Footer: React.FC<FooterProps> = ({ onHomeClick }) => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-16">
         {/* Branding Matrix Block */}
         <div className="lg:col-span-5 space-y-8 reveal delay-100">
-          <div className="bg-white border-4 sm:border-8 border-black p-6 sm:p-10 neo-shadow relative group overflow-hidden dark:bg-[#2a2a2a]">
+          <div className="bg-white border-4 sm:border-8 border-black dark:border-white/70 p-6 sm:p-10 neo-shadow relative group overflow-hidden dark:bg-[#2a2a2a]">
             {/* Background Tech Decor */}
             <div className="absolute -top-10 -right-10 opacity-[0.03] group-hover:opacity-10 transition-opacity">
               <svg width="300" height="300" viewBox="0 0 24 24" fill="black" className="dark:fill-white">
@@ -59,7 +59,7 @@ const Footer: React.FC<FooterProps> = ({ onHomeClick }) => {
               </p>
             </div>
 
-            <div className="mt-8 pt-8 border-t-4 border-black border-dashed flex flex-wrap gap-3">
+            <div className="mt-8 pt-8 border-t-4 border-black dark:border-white/20 border-dashed flex flex-wrap gap-3">
               <div className="bg-black text-white px-3 py-1.5 font-black uppercase text-[9px] sm:text-xs border-2 border-black flex items-center gap-2">
                 <span className="w-2 h-2 bg-lime-500 rounded-full animate-pulse"></span>
                 Status: Available
@@ -75,7 +75,7 @@ const Footer: React.FC<FooterProps> = ({ onHomeClick }) => {
         <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-8 md:gap-12">
           {/* Internal Index */}
           <div className="space-y-6 reveal delay-200">
-            <h3 className="font-black uppercase text-xs sm:text-sm italic tracking-widest text-pink-500 bg-black w-fit px-2 py-0.5">
+            <h3 className="font-black uppercase text-xs sm:text-sm italic tracking-widest text-pink-500 bg-black dark:bg-[#2a2a2a] dark:border dark:border-white/20 w-fit px-2 py-0.5">
               Navigation
             </h3>
             <ul className="space-y-3">
@@ -103,7 +103,7 @@ const Footer: React.FC<FooterProps> = ({ onHomeClick }) => {
 
           {/* Social Matrix */}
           <div className="space-y-6 reveal delay-300">
-            <h3 className="font-black uppercase text-xs sm:text-sm italic tracking-widest text-cyan-400 bg-black w-fit px-2 py-0.5">
+            <h3 className="font-black uppercase text-xs sm:text-sm italic tracking-widest text-cyan-400 bg-black dark:bg-[#2a2a2a] dark:border dark:border-white/20 w-fit px-2 py-0.5">
               Uplink
             </h3>
             <ul className="space-y-3">
@@ -125,7 +125,7 @@ const Footer: React.FC<FooterProps> = ({ onHomeClick }) => {
 
           {/* Location / Tech Column (Hidden on smallest mobile, visible on sm+) */}
           <div className="hidden sm:flex flex-col space-y-6 reveal delay-400">
-            <h3 className="font-black uppercase text-xs sm:text-sm italic tracking-widest text-yellow-400 bg-black w-fit px-2 py-0.5">
+            <h3 className="font-black uppercase text-xs sm:text-sm italic tracking-widest text-yellow-400 bg-black dark:bg-[#2a2a2a] dark:border dark:border-white/20 w-fit px-2 py-0.5">
               Registry
             </h3>
             <div className="space-y-4">

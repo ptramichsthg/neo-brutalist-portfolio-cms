@@ -1,13 +1,13 @@
 
 import React from 'react';
-import { SKILLS, CERTIFICATES } from '../constants';
+import { SKILLS } from '../constants';
 import { useCertificates } from '../hooks/useSupabase';
 import NeoCard from './NeoCard';
 import { FaQuestion, FaGitAlt, FaBolt, FaFigma, FaRocket } from 'react-icons/fa';
 
 const About: React.FC = () => {
   const { certificates, loading } = useCertificates();
-  const displayCertificates = certificates.length > 0 ? certificates : CERTIFICATES;
+  const displayCertificates = certificates;
 
   return (
     <section id="about" className="space-y-8 sm:space-y-12 md:space-y-16 lg:space-y-24">
@@ -178,7 +178,7 @@ const About: React.FC = () => {
               </NeoCard>
             ))
           ) : displayCertificates.map((cert) => (
-            <NeoCard key={cert.id} color="bg-white" className="flex flex-col justify-between gap-0 h-full hover:-translate-y-2 transition-transform overflow-hidden p-0!">
+            <NeoCard key={cert.id} color="bg-white dark:bg-[#2a2a2a]" className="flex flex-col justify-between gap-0 h-full hover:-translate-y-2 transition-transform overflow-hidden p-0!">
               {/* Certificate Image Preview */}
               {cert.image ? (
                 <a href={cert.url} target="_blank" rel="noopener noreferrer" className="block relative group overflow-hidden border-b-4 border-black">

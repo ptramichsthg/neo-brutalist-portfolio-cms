@@ -24,10 +24,10 @@ const NeoCard: React.FC<NeoCardProps> = ({
     <div
       onClick={onClick}
       className={`
-      border-4 border-black 
-      ${color} 
-      ${noShadow ? "" : "neo-shadow"} 
-      p-6 
+      border-4 border-black dark:border-white/80
+      ${color}
+      ${noShadow ? "" : "neo-shadow dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.3)]"}
+      p-6
       ${className}
       ${onClick ? "cursor-pointer" : ""}
     `}
