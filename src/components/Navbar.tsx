@@ -105,7 +105,7 @@ const Navbar: React.FC<NavbarProps> = ({ onHomeClick, currentView = 'home' }) =>
   };
 
   return (
-    <div className={`fixed top-0 left-0 right-0 z-100 px-2 sm:px-4 transition-all duration-500 flex justify-center bg-(--bg-primary) ${isScrolled ? 'pt-1 sm:pt-2' : 'pt-4 sm:pt-6'
+    <div className={`fixed top-0 left-0 right-0 z-100 px-2 sm:px-4 transition-all duration-500 flex justify-center ${isScrolled ? 'pt-1 sm:pt-2' : 'pt-4 sm:pt-6'
       }`}>
       <div className={`
         w-full max-w-7xl border-[3px] sm:border-4 border-black dark:border-white transition-all duration-500 relative bg-white dark:bg-[#1a1a1a] dark:text-white
